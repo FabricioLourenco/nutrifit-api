@@ -1,0 +1,13 @@
+/nutrifit.Service/bin
+/nutrifit.Service/obj
+/nutrifit.Infra.Data/bin
+/nutrifit.Infra.Data/obj
+/nutrifit.Infra.CrossCutting.Ioc/bin
+/nutrifit.Infra.CrossCutting.Ioc/obj
+/nutrifit.Infra.CrossCutting/bin
+/nutrifit.Infra.CrossCutting/obj
+/nutrifit.Domain/bin
+/nutrifit.Domain/obj
+/nutrifit.Api/bin
+/nutrifit.Api/obj
+/.vs
