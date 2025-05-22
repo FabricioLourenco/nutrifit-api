@@ -19,6 +19,8 @@ using Nutrifit.Domain.Interfaces.Infra.Data;
 using Nutrifit.Infra.Data.Data;
 using Nutrifit.Domain.Interfaces.Application.Services;
 using Nutrifit.Service.Services;
+using Nutrifit.Domain.Interfaces.Infra.Data.Repositories;
+using Nutrifit.Infra.Data.Repositories;
 
 namespace nutrifit.Infra.CrossCutting.Ioc
 {
@@ -47,6 +49,8 @@ namespace nutrifit.Infra.CrossCutting.Ioc
             services.AddScoped(typeof(INotificationHandler), typeof(NotificationHandler));
 
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
             return services;
         }
