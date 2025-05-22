@@ -45,6 +45,13 @@ namespace Nutrifit.Infra.Data.Repositories
             return await Query().Where(c => c.Id == usuarioId).FirstOrDefaultAsync();
         }
 
+        public async Task<Usuario?> BuscarUsuarioLogin(string email, string senhaHash)
+        {
+            return await Query().Where(c => c.Email.Equals(email) &&
+                                        c.SenhaHash.Equals(senhaHash) &&
+                                        c.Ativo).FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<Usuario>> BuscarUsuarios()
         {
             return await Query().ToListAsync();

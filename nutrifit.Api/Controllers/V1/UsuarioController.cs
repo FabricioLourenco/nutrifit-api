@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Nutrifit.Domain.DTos;
 using Nutrifit.Domain.DTos.Base;
@@ -6,6 +7,9 @@ using Nutrifit.Domain.Interfaces.Application.Services;
 
 namespace Nutrifit.Api.Controllers.V1
 {
+    [ApiController]
+    [ApiVersion(1.0)]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class UsuarioController : QControllerBase
     {
         private readonly IUsuarioService _usuarioService;
@@ -26,6 +30,7 @@ namespace Nutrifit.Api.Controllers.V1
 
         [HttpGet]
         [MapToApiVersion(1.0)]
+        [Authorize]
         [Route("buscar-usuarios")]
         public async Task<IActionResult> BuscarUsuarios()
         {
