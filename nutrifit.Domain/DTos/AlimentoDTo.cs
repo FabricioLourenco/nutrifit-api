@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nutrifit.Domain.Interfaces.Infra.Data.Repositories
+namespace Nutrifit.Domain.DTos
 {
-    public class Class1
+    public class AlimentoDTo
     {
     }
 }
