@@ -14,9 +14,9 @@ namespace Nutrifit.Infra.CrossCutting.Handlers.Jwt
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[] {
-                    new Claim("EstacaoId", options.EstacaoId.ToString()),
-                    new Claim("UsuarioId", options.UsuarioId.ToString()),
                     new Claim("Nome", options.Nome.ToString()),
+                    new Claim("Email", options.Email.ToString()),
+                    new Claim("TipoUsuario", options.TipoUsuario.ToString()),
                     new Claim(ClaimTypes.Role, role)
                 }),
                 Expires = options.ExpireIn,
