@@ -8,6 +8,7 @@ namespace Nutrifit.Domain.DTos
         public DateTime DataNascimento { get; set; }
         public long UsuarioId { get; set; }
         public long NutricionistaId { get; set; }
+        public virtual ICollection<ConsultaDTo> Consultas { get; set; }
         public virtual ICollection<PlanoAlimentarDTo> PlanosAlimentares { get; set; }
         public virtual ICollection<EvolucaoPacienteDTo> Evolucoes { get; set; }
         public virtual ICollection<ComentarioPacienteDTo> Comentarios { get; set; }

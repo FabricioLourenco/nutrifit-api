@@ -9,6 +9,7 @@ namespace Nutrifit.Service.Mappers
         public NutricionistaMapper()
         {
             CreateMap<NutricionistaDTo, Nutricionista>();
+            CreateMap<Nutricionista, NutricionistaDTo>();
         }
     }
 }

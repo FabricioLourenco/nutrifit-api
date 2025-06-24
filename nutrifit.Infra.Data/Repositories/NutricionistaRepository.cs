@@ -37,7 +37,8 @@ namespace Nutrifit.Infra.Data.Repositories
         {
             return await Query()
                          .Where(n => n.Id == nutricionistaId)
-                         .Include(n => n.Usuario) // Inclui o objeto Usuario associado
+                         .Include(n => n.Usuario)
+                         .Include(n => n.Pacientes)// Inclui o objeto Usuario associado
                          .FirstOrDefaultAsync();
         }
 

@@ -44,6 +44,10 @@ namespace Nutrifit.Infra.Data.Repositories
                          .Where(p => p.Id == pacienteId)
                          .Include(p => p.Usuario)
                          .Include(p => p.Nutricionista)
+                         .Include(p => p.Consultas)
+                         .Include(p => p.Evolucoes)
+                         .Include(p => p.PlanosAlimentares)
+                         .Include(p => p.Comentarios)
                          .FirstOrDefaultAsync();
         }
 
