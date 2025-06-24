@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Nutrifit.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Nutrifit.Infra.Data.Configurators
 {
@@ -16,9 +11,9 @@ namespace Nutrifit.Infra.Data.Configurators
 
             builder.ToTable("AlimentoIbge");
 
-            builder.HasKey(x => x.Codigo);
+            builder.HasKey(x => x.NumeroDoAlimento);
 
-            builder.Property(p => p.Codigo).IsRequired();
+            builder.Property(p => p.NumeroDoAlimento).IsRequired();
         }
     }
 }

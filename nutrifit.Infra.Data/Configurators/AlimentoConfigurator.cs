@@ -1,12 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Nutrifit.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Nutrifit.Infra.Data.Configurators
 {
@@ -19,9 +13,10 @@ namespace Nutrifit.Infra.Data.Configurators
             builder.HasKey(a => a.Id);
 
             builder.HasOne(a => a.AlimentoIbge)
-                .WithMany()
-                .HasForeignKey(a => a.CodigoIBGE)
-                .OnDelete(DeleteBehavior.Restrict);
+                    .WithMany()
+                    .HasForeignKey(a => a.AlimentoIbgeId)
+                    .HasPrincipalKey(ibge => ibge.NumeroDoAlimento)
+                    .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -9,6 +9,8 @@ namespace Nutrifit.Service.Mappers
         public UsuarioMapper()
         {
             CreateMap<UsuarioDTo, Usuario>();
+
+            CreateMap<Usuario, UsuarioDTo>();
         }
     }
 }

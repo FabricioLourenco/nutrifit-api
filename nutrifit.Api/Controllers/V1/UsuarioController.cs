@@ -38,6 +38,19 @@ namespace Nutrifit.Api.Controllers.V1
             return QResult(arquivos);
         }
 
+        [HttpGet]
+        [MapToApiVersion(1.0)]
+        [Route("buscar-usuario-por-id")]
+        public async Task<IActionResult> BuscarUsuarioPorId(long id)
+        {
+            var usuario = await _usuarioService.BuscarUsuarioPorId(id);
+            if (usuario == null)
+            {
+                return NotFound(); 
+            }
+            return QResult(usuario);
+        }
+
         [HttpPut]
         [MapToApiVersion(1.0)]
         [Route("editar-usuario")]

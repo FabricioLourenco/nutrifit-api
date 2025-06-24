@@ -48,6 +48,19 @@ namespace Nutrifit.Service.Services
             }          
         }
 
+        public async Task<UsuarioDTo?> BuscarUsuarioPorId(long id)
+        {
+            try
+            {
+                var usuario = await _usuarioRepository.BuscarUsuarioId(id);
+                return _mapper.Map<UsuarioDTo>(usuario);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao buscar usuario: {ex.Message}");
+            }
+        }
+
         public async Task<Usuario> AtualizarUsuario(UpdateBaseDTo model)
         {
             try

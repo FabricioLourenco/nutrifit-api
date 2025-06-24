@@ -10,7 +10,7 @@ namespace Nutrifit.Domain.Entities
         public long NutricionistaId { get; set; }
         public virtual Usuario Usuario { get; set; }
         public virtual Nutricionista Nutricionista { get; set; }
-
+        public virtual ICollection<Consulta> Consultas { get; set; }
         public virtual ICollection<PlanoAlimentar> PlanosAlimentares { get; set; }
         public virtual ICollection<EvolucaoPaciente> Evolucoes { get; set; }
         public virtual ICollection<ComentarioPaciente> Comentarios { get; set; }

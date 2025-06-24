@@ -1,6 +1,6 @@
 ﻿namespace Nutrifit.Domain.DTos.Base
 {
-    public class UpdateBaseDTo
+    public class BaseDTo
     {
         public long Id { get; set; }
     }

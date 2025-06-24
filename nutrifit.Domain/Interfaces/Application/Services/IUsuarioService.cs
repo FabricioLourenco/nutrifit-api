@@ -7,11 +7,9 @@ namespace Nutrifit.Domain.Interfaces.Application.Services
     public interface IUsuarioService
     {
         Task<Usuario> InserirUsuario(UsuarioDTo model);
-
         Task<List<Usuario>> BuscarUsuarios();
-
+        Task<UsuarioDTo?> BuscarUsuarioPorId(long id);
         Task<Usuario> AtualizarUsuario(UpdateBaseDTo model);
-
         Task<bool> ExcluirUsuario(long usuarioId);
     }
 }

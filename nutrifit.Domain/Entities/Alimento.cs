@@ -9,7 +9,7 @@ namespace Nutrifit.Domain.Entities
         public decimal Proteinas { get; set; }
         public decimal Carboidratos { get; set; }
         public decimal Gorduras { get; set; }
-        public int CodigoIBGE { get; set; }
+        public int AlimentoIbgeId { get; set; }
         public AlimentoIbge AlimentoIbge { get; set; }
     }
 }

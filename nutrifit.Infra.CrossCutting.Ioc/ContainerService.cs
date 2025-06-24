@@ -51,6 +51,10 @@ namespace nutrifit.Infra.CrossCutting.Ioc
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<INutricionistaRepository, NutricionistaRepository>();
+            services.AddScoped<IConsultaRepository, ConsultaRepository>();
+            services.AddScoped<IPacienteRepository, PacienteRepository>();
+
 
             return services;
         }
