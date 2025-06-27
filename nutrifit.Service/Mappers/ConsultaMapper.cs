@@ -10,7 +10,6 @@ namespace Nutrifit.Service.Mappers
         {
             CreateMap<ConsultaDTo, Consulta>();
             CreateMap<Consulta, ConsultaDTo>();
-
         }
     }
 }

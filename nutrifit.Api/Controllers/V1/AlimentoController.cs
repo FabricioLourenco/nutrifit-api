@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Nutrifit.Domain.DTos.Base;
 using Nutrifit.Domain.Interfaces.Application.Services;
 
 namespace Nutrifit.Api.Controllers.V1
@@ -17,42 +18,36 @@ namespace Nutrifit.Api.Controllers.V1
             _alimentoService = alimentoService;
         }
 
+        [HttpPost] 
+        [MapToApiVersion(1.0)]
+        [Route("importar-ibge-paginado")]
+        public async Task<IActionResult> ImportarAlimentosIbgePaginado([FromBody] PaginationDTo pagination)
+        {
+            var result = await _alimentoService.ImportarAlimentosDoIbgePaginado(pagination);
+            return QResult(result);
+        }
 
-        //[HttpGet]
-        //[MapToApiVersion(1.0)]
-        //[Route("buscar-alimentos")]
-        //public async Task<IActionResult> BuscarAlimentos()
-        //{
-        //    var alimentos = await _alimentoService.BuscarAlimentos();
-        //    return QResult(alimentos);
-        //}
+        [HttpGet]
+        [MapToApiVersion(1.0)]
+        [Route("buscar-alimentos")]
+        public async Task<IActionResult> BuscarAlimentos()
+        {
+            var alimentos = await _alimentoService.BuscarAlimentos();
+            return QResult(alimentos);
+        }
 
+        [HttpGet]
+        [MapToApiVersion(1.0)]
+        [Route("buscar-alimento-por-id")]
+        public async Task<IActionResult> BuscarAlimentoPorId(long id)
+        {
+            var alimento = await _alimentoService.BuscarAlimentoPorId(id);
+            if (alimento == null)
+            {
+                return NotFound();
+            }
+            return QResult(alimento);
+        }
 
-        //[HttpPost]
-        //[MapToApiVersion(1.0)]
-        //[Route("inserir-alimento")]
-        //public async Task<IActionResult> InserirAlimento([FromBody] AlimentoDTo model)
-        //{
-        //    var arquivo = await _arquivoService.InserirArquivo(model);
-        //    return QResult(arquivo);
-        //}
-
-        //[HttpPut]
-        //[MapToApiVersion(1.0)]
-        //[Route("editar-arquivo")]
-        //public async Task<IActionResult> AtualizarArquivo([FromBody] UpdateArquivoDTo model)
-        //{
-        //    var arquivo = await _arquivoService.AtualizarArquivo(model);
-        //    return QResult(arquivo);
-        //}
-
-        //[HttpDelete]
-        //[MapToApiVersion(1.0)]
-        //[Route("excluir-arquivo")]
-        //public async Task<IActionResult> ExcluirArquivo([FromBody] RemoverDTo model)
-        //{
-        //    var arquivo = await _arquivoService.ExcluirArquivo(model.Id);
-        //    return QResult(arquivo);
-        //}
     }
 }

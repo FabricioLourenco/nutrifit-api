@@ -55,7 +55,10 @@ namespace nutrifit.Infra.CrossCutting.Ioc
             services.AddScoped<IConsultaRepository, ConsultaRepository>();
             services.AddScoped<IPacienteRepository, PacienteRepository>();
             services.AddScoped<IEvolucaoPacienteRepository, EvolucaoPacienteRepository>();
-
+            services.AddScoped<IComentarioPacienteRepository, ComentarioPacienteRepository>();
+            services.AddScoped<IAlimentoIbgeRepository, AlimentoIbgeRepository>();
+            services.AddScoped<IAlimentoRepository, AlimentoRepository>();
+            services.AddScoped<IPlanoAlimentarRepository, PlanoAlimentarRepository>();
 
             return services;
         }
