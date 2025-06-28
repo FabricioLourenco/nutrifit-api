@@ -4,6 +4,7 @@ namespace Nutrifit.Domain.DTos
 {
     public class PacienteDTo
     {
+        public long Id { get; set; }
         public string Sexo { get; set; }
         public DateTime DataNascimento { get; set; }
         public long UsuarioId { get; set; }
