@@ -43,7 +43,7 @@ namespace Nutrifit.Infra.Data.Repositories
         public async Task<Usuario?> BuscarUsuarioId(long usuarioId)
         {
             return await Query()
-                        .Include(c => c.Nutricionista)
+                        .Include(c => c.Nutricionista).ThenInclude(d => d.Pacientes)
                         .Include(c => c.Paciente)
                         .Where(c => c.Id == usuarioId).FirstOrDefaultAsync();
         }

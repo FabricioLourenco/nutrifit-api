@@ -17,6 +17,7 @@ namespace Nutrifit.Infra.CrossCutting.Handlers.Jwt
                     new Claim("Nome", options.Nome.ToString()),
                     new Claim("Email", options.Email.ToString()),
                     new Claim("TipoUsuario", options.TipoUsuario.ToString()),
+                    new Claim("Id", options.Id.ToString()),
                     new Claim(ClaimTypes.Role, role)
                 }),
                 Expires = options.ExpireIn,
