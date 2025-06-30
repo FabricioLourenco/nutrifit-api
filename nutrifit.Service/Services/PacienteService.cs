@@ -81,7 +81,15 @@ namespace Nutrifit.Service.Services
             try
             {
                 var pacientes = await _pacienteRepository.BuscarPacientesPorNutricionistaId(nutricionistaId);
-                return _mapper.Map<List<PacienteDTo>>(pacientes);
+                var pacientesDTo = _mapper.Map<List<PacienteDTo>>(pacientes);
+                
+                foreach(var paciente in pacientesDTo)
+                {
+                    var usuarioBanco = await _usuarioRepository.BuscarUsuarioId(paciente.UsuarioId);
+                    paciente.Nome = usuarioBanco.Nome;
+                }
+
+                return pacientesDTo;
             }
             catch (Exception ex)
             {

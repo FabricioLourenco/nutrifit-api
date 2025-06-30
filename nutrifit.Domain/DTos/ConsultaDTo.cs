@@ -5,6 +5,7 @@
         public long Id { get; set; }
         public DateTime DataHora { get; set; }
         public string? Observacoes { get; set; }
+        public string NomePaciente { get; set; }
         public long PacienteId { get; set; }
 
     }
