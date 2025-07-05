@@ -61,21 +61,20 @@ namespace Nutrifit.Service.Services
 
                 if (alimentosToInsert.Any())
                 {
-                    await _alimentoRepository.AddRangeAlimentosAsync(alimentosToInsert);                  
+                    await _alimentoRepository.AddRangeAlimentosAsync(alimentosToInsert);
                 }
 
-                foreach (var alimentoItem in alimentosToInsert) 
+                foreach (var alimentoItem in alimentosToInsert)
                 {
                     importedAlimentosResponse.Add(_mapper.Map<AlimentoDTo>(alimentoItem));
                 }
 
-
                 return new PagedResultDTo<AlimentoDTo>
                 {
-                    Items = importedAlimentosResponse, 
+                    Items = importedAlimentosResponse,
                     TotalCount = pagedAlimentosIbge.TotalCount,
-                    PageNumber = pagination.PageNumber,
-                    PageSize = pagination.PageSize
+                    PageNumber = pagination.PageNumber, 
+                    PageSize = pagedAlimentosIbge.PageSize 
                 };
             }
             catch (Exception ex)

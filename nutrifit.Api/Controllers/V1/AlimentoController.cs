@@ -18,11 +18,19 @@ namespace Nutrifit.Api.Controllers.V1
             _alimentoService = alimentoService;
         }
 
-        [HttpPost] 
+        [HttpGet] 
         [MapToApiVersion(1.0)]
         [Route("importar-ibge-paginado")]
-        public async Task<IActionResult> ImportarAlimentosIbgePaginado([FromBody] PaginationDTo pagination)
+        public async Task<IActionResult> ImportarAlimentosIbgePaginado(
+        [FromQuery] int pageNumber = 1, 
+        [FromQuery] int pageSize = 100) 
         {
+            var pagination = new PaginationDTo
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize 
+            };
+
             var result = await _alimentoService.ImportarAlimentosDoIbgePaginado(pagination);
             return QResult(result);
         }

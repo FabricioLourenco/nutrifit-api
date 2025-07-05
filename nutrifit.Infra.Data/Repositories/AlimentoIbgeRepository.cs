@@ -37,26 +37,20 @@ namespace Nutrifit.Infra.Data.Repositories
         public async Task<PagedResultDTo<AlimentoIbge>> BuscarAlimentosIbgePaginado(PaginationDTo pagination)
         {
             var query = _context.AlimentoIbge.AsQueryable();
-
-            if (!string.IsNullOrWhiteSpace(pagination.SearchTerm))
-            {
-                query = query.Where(a => a.DescricaoDosAlimentos.Contains(pagination.SearchTerm) ||
-                                         a.CategoriaDoAlimento.Contains(pagination.SearchTerm));
-            }
-
             var totalCount = await query.CountAsync();
+            var pageSizeForImport = 100; 
 
             var items = await query
-                .Skip((pagination.PageNumber - 1) * pagination.PageSize)
-                .Take(pagination.PageSize)
-            .ToListAsync();
+                .Skip((pagination.PageNumber - 1) * pageSizeForImport) 
+                .Take(pageSizeForImport) 
+                .ToListAsync();
 
             return new PagedResultDTo<AlimentoIbge>
             {
                 Items = items,
                 TotalCount = totalCount,
                 PageNumber = pagination.PageNumber,
-                PageSize = pagination.PageSize
+                PageSize = pageSizeForImport 
             };
         }
 
