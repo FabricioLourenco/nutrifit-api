@@ -148,6 +148,101 @@ namespace Nutrifit.Service.Services
             }
         }
 
+        public async Task<AlimentosAlternativosResponseDTo> BuscarAlimentosAlternativos(long alimentoId, decimal quantidadeGrama)
+        {
+            try
+            {
+
+                var alimentoOriginalEntity = await _alimentoRepository.BuscarAlimentoId(alimentoId);
+                if (alimentoOriginalEntity == null)
+                {
+                    _notificationHandler.AddNotification("Alimento original não encontrado.");
+                    return new AlimentosAlternativosResponseDTo
+                    {
+                        AlimentoOriginal = null,
+                        AlimentosAlternativos = new List<AlimentoAlternativoDTo>()
+                    };
+                }
+
+                if (quantidadeGrama <= 0)
+                {
+                    _notificationHandler.AddNotification("A quantidade em gramas deve ser maior que zero.");
+                    return new AlimentosAlternativosResponseDTo
+                    {
+                        AlimentoOriginal = _mapper.Map<AlimentoDTo>(alimentoOriginalEntity),
+                        AlimentosAlternativos = new List<AlimentoAlternativoDTo>()
+                    };
+                }
+
+                var alimentoOriginalDTo = _mapper.Map<AlimentoDTo>(alimentoOriginalEntity);
+
+                decimal caloriasPorGramaOriginal = alimentoOriginalEntity.Calorias / 100m;
+                decimal caloriasAlvo = caloriasPorGramaOriginal * quantidadeGrama;
+
+                const decimal toleranciaPercentualNaBusca = 0.50m; 
+                decimal minCaloriasPorGramaAceitavel = caloriasPorGramaOriginal * (1 - toleranciaPercentualNaBusca);
+                decimal maxCaloriasPorGramaAceitavel = caloriasPorGramaOriginal * (1 + toleranciaPercentualNaBusca);
+
+                var todosAlimentos = await _alimentoRepository.BuscarAlimentos();
+
+                var listaAlternativasProcessadas = new List<AlimentoAlternativoDTo>();
+
+                foreach (var alimentoAlternativo in todosAlimentos)
+                {
+
+                    if (alimentoAlternativo.Id == alimentoOriginalEntity.Id || alimentoAlternativo.Calorias <= 0)
+                    {
+                        continue;
+                    }
+
+                    decimal caloriasPorGramaAlternativo = alimentoAlternativo.Calorias / 100m;
+
+                    if (caloriasPorGramaAlternativo == 0)
+                    {
+                        continue;
+                    }
+
+                    decimal quantidadeGramaNecessaria = caloriasAlvo / caloriasPorGramaAlternativo;
+
+                    if (caloriasPorGramaAlternativo < minCaloriasPorGramaAceitavel || caloriasPorGramaAlternativo > maxCaloriasPorGramaAceitavel)
+                    {
+                        continue;
+                    }
+
+
+                    listaAlternativasProcessadas.Add(new AlimentoAlternativoDTo
+                    {
+                        Id = alimentoAlternativo.Id,
+                        Nome = alimentoAlternativo.Nome,
+                        CaloriasPorGrama = caloriasPorGramaAlternativo,
+                        CaloriasNaQuantidadeInformada = caloriasAlvo, 
+                        QuantidadeGramaNecessaria = quantidadeGramaNecessaria,
+                        Proteinas = alimentoAlternativo.Proteinas,
+                        Carboidratos = alimentoAlternativo.Carboidratos,
+                        Gorduras = alimentoAlternativo.Gorduras
+                    });
+                }
+
+                var alternativasOrdenadas = listaAlternativasProcessadas
+                    .OrderBy(a => Math.Abs(a.QuantidadeGramaNecessaria - quantidadeGrama)) 
+                    .Take(3) 
+                    .ToList();
+
+
+                return new AlimentosAlternativosResponseDTo
+                {
+                    AlimentoOriginal = alimentoOriginalDTo,
+                    AlimentosAlternativos = alternativasOrdenadas
+                };
+            }
+            catch (Exception ex)
+            {
+                _notificationHandler.AddNotification($"Erro ao buscar alimentos alternativos: {ex.Message}");
+                throw;
+            }
+        }
+
+
         #endregion
     }
 }

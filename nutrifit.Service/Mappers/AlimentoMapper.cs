@@ -9,6 +9,9 @@ namespace Nutrifit.Service.Mappers
         public AlimentoMapper()
         {
             CreateMap<Alimento, AlimentoDTo>();
+            CreateMap<Alimento, AlimentoAlternativoDTo>()
+            .ForMember(dest => dest.CaloriasPorGrama, opt => opt.MapFrom(src => src.Calorias / 100m)) 
+            .ForMember(dest => dest.CaloriasNaQuantidadeInformada, opt => opt.Ignore()); 
         }
     }
 }

@@ -10,5 +10,6 @@ namespace Nutrifit.Domain.Interfaces.Application.Services
         Task<AlimentoDTo> AtualizarAlimento(UpdateBaseDTo model);
         Task<bool> ExcluirAlimento(long alimentoId);
         Task<PagedResultDTo<AlimentoDTo>> ImportarAlimentosDoIbgePaginado(PaginationDTo pagination);
+        Task<AlimentosAlternativosResponseDTo> BuscarAlimentosAlternativos(long alimentoId, decimal quantidadeGrama); 
     }
 }

@@ -57,5 +57,20 @@ namespace Nutrifit.Api.Controllers.V1
             return QResult(alimento);
         }
 
+        [HttpGet]
+        [MapToApiVersion(1.0)]
+        [Route("buscar-alimentos-alternativos/{alimentoId:long}/{quantidadeGrama:decimal}")]
+        public async Task<IActionResult> BuscarAlimentosAlternativos(long alimentoId, decimal quantidadeGrama)
+        {
+            var alternativesResponse = await _alimentoService.BuscarAlimentosAlternativos(alimentoId, quantidadeGrama);
+
+            if (alternativesResponse.AlimentoOriginal == null)
+            {
+                return NotFound();
+            }
+
+            return QResult(alternativesResponse);
+        }
+
     }
 }
