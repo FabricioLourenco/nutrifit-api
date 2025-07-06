@@ -59,6 +59,7 @@ namespace Nutrifit.Infra.Data.Repositories
             return await Query()
                          .Where(pa => pa.PacienteId == pacienteId)
                          .Include(pa => pa.Paciente)
+                         .Include(pa => pa.Refeicoes).ThenInclude(d => d.Itens).ThenInclude(e => e.Alimento)
                          .ToListAsync();
         }
 

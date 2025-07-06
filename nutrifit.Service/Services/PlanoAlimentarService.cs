@@ -15,16 +15,19 @@ namespace Nutrifit.Service.Services
         private readonly IPlanoAlimentarRepository _planoAlimentarRepository;
         private readonly IPacienteRepository _pacienteRepository; 
         private readonly INotificationHandler _notificationHandler;
+        private readonly IAlimentoRepository _alimentoRepository;
 
         public PlanoAlimentarService(IMapper mapper,
                                      IPlanoAlimentarRepository planoAlimentarRepository,
                                      IPacienteRepository pacienteRepository,
-                                     INotificationHandler notificationHandler)
+                                     INotificationHandler notificationHandler,
+                                     IAlimentoRepository alimentoRepository)
         {
             _mapper = mapper;
             _planoAlimentarRepository = planoAlimentarRepository;
             _pacienteRepository = pacienteRepository;
             _notificationHandler = notificationHandler;
+            _alimentoRepository = alimentoRepository;
         }
 
         #region Public Methods
@@ -70,7 +73,20 @@ namespace Nutrifit.Service.Services
             try
             {
                 var plano = await _planoAlimentarRepository.BuscarPlanoAlimentarId(id);
-                return _mapper.Map<PlanoAlimentarDTo>(plano);
+                var planoDTO = _mapper.Map<PlanoAlimentarDTo>(plano);
+                
+                foreach(var refeicao in planoDTO.Refeicoes)
+                {
+
+                    foreach(var item in refeicao.Itens)
+                    {
+                        var alimento = await _alimentoRepository.BuscarAlimentoId(item.AlimentoId);
+                        item.Nome = alimento.Nome;
+                    }
+                }
+
+
+                return planoDTO;
             }
             catch (Exception ex)
             {
@@ -84,7 +100,22 @@ namespace Nutrifit.Service.Services
             try
             {
                 var planos = await _planoAlimentarRepository.BuscarPlanosAlimentaresPorPacienteId(pacienteId);
-                return _mapper.Map<List<PlanoAlimentarDTo>>(planos);
+                var planosDTo = _mapper.Map<List<PlanoAlimentarDTo>>(planos);
+
+                foreach(var plano in planosDTo)
+                { 
+                    foreach (var refeicao in plano.Refeicoes)
+                    {
+
+                        foreach (var item in refeicao.Itens)
+                        {
+                            var alimento = await _alimentoRepository.BuscarAlimentoId(item.AlimentoId);
+                            item.Nome = alimento.Nome;
+                        }
+                    }
+                }
+
+                return planosDTo;
             }
             catch (Exception ex)
             {
